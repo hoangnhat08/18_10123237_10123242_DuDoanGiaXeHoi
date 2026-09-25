@@ -6,8 +6,8 @@
 
 | Họ tên | MSSV | Phần việc |
 |---|---|---|
-| *(điền)* | *(điền)* | Training / EDA / báo cáo |
-| *(điền)* | *(điền)* | AI Service / Backend / Frontend / Docker |
+| *(điền)* | *(điền)* | 
+| *(điền)* | *(điền)* | 
 
 ## 2. Bài toán
 
