@@ -1,0 +1,35 @@
+# Bi mat / cau hinh may - KHONG commit
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+
+# Log chay thu tren may - bo qua log runtime (dai, doi lien tuc),
+# nhung GIU LAI logs/tunnel-changes.log lam bang chung ghi log doi tunnel (bat buoc)
+logs/ai-service/*.log
+logs/backend/*.log
+logs/ngrok-raw.log
+!logs/.gitkeep
+!logs/tunnel-changes.log
+
+# Ngrok
+ngrok
+ngrok.exe
+
+# Node (neu frontend build bang npm sau nay)
+node_modules/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,5 @@
+model,key,file,MAE_test,RMSE_test,R2_test,MAE_train,RMSE_train,R2_train,train_time_s,predict_time_ms_per_row,model_size_MB
+SVR,svr,model_svr.joblib,83.3,289.05,0.9772,55.3,157.32,0.9919,35.82,0.2886,0.18
+Linear Regression (baseline),linear_regression,model_linear_regression.joblib,100.18,344.67,0.9676,74.75,222.69,0.9837,0.67,0.0028,0.03
+Random Forest,random_forest,model_random_forest.joblib,136.12,457.53,0.9429,120.71,448.41,0.9339,52.95,0.0373,26.28
+Decision Tree,decision_tree,model_decision_tree.joblib,217.15,611.64,0.898,202.26,572.68,0.8921,0.16,0.0025,0.04

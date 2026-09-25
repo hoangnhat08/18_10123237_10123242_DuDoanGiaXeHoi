@@ -1,0 +1,84 @@
+{
+  "target": "price",
+  "target_unit": "million_vnd",
+  "features": [
+    {
+      "name": "brand",
+      "dtype": "category",
+      "example": "Toyota"
+    },
+    {
+      "name": "model",
+      "dtype": "category",
+      "example": "Camry 2.5Q"
+    },
+    {
+      "name": "series",
+      "dtype": "category",
+      "allowed_values": [
+        "Bán tải / Pickup",
+        "Convertible/Cabriolet",
+        "Coupe",
+        "Crossover",
+        "Hatchback",
+        "SUV",
+        "Sedan",
+        "Truck",
+        "Van/Minivan",
+        "Wagon"
+      ]
+    },
+    {
+      "name": "year",
+      "dtype": "int",
+      "min": 1990,
+      "max": 2023
+    },
+    {
+      "name": "driven_kms",
+      "dtype": "float",
+      "min": 1.0,
+      "max": 1000000.0
+    },
+    {
+      "name": "assemble_place",
+      "dtype": "category",
+      "allowed_values": [
+        "Lắp ráp trong nước",
+        "Nhập khẩu"
+      ]
+    },
+    {
+      "name": "engine_type",
+      "dtype": "category",
+      "allowed_values": [
+        "-",
+        "Dầu",
+        "Hybrid",
+        "Xăng",
+        "Điện"
+      ]
+    },
+    {
+      "name": "transmission",
+      "dtype": "category",
+      "allowed_values": [
+        "-",
+        "Số tay",
+        "Số tự động"
+      ]
+    },
+    {
+      "name": "num_of_door",
+      "dtype": "int",
+      "min": 2,
+      "max": 6
+    },
+    {
+      "name": "num_of_seat",
+      "dtype": "int",
+      "min": 2,
+      "max": 16
+    }
+  ]
+}

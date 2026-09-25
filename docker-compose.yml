@@ -1,0 +1,56 @@
+services:
+  ai-service:
+    build:
+      context: ./ai-models
+      dockerfile: service/Dockerfile
+    container_name: car-ai-service
+    env_file: .env
+    # Ghi log ra CA console (docker compose logs -f) LAN file /app/logs/ai-service.log,
+    # duoc mount ra ./logs/ai-service tren may that -> log KHONG MAT khi container bi xoa/rebuild.
+    command: sh -c "python service/app.py 2>&1 | tee -a /app/logs/ai-service.log"
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./logs/ai-service:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./app/backend
+    container_name: car-backend
+    env_file: .env
+    environment:
+      - AI_SERVICE_URL=${AI_SERVICE_URL}
+    # Ghi log ra CA console (docker compose logs -f) LAN file /app/logs/backend.log,
+    # duoc mount ra ./logs/backend tren may that -> log KHONG MAT khi container bi xoa/rebuild.
+    command: sh -c "python app.py 2>&1 | tee -a /app/logs/backend.log"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs/backend:/app/logs
+    depends_on:
+      ai-service:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build: ./app/frontend
+    container_name: car-frontend
+    env_file: .env
+    environment:
+      - BACKEND_URL=http://backend:8000
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

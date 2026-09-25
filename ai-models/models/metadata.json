@@ -1,0 +1,165 @@
+{
+  "model_version": "2.0.0",
+  "trained_at": "2026-09-25T07:00:13.419377",
+  "best_model_key": "svr",
+  "best_model_name": "SVR",
+  "model_name": "SVR",
+  "model_key": "svr",
+  "metrics_test": {
+    "MAE": 83.3,
+    "RMSE": 289.05,
+    "R2": 0.9772
+  },
+  "metrics_train": {
+    "MAE": 55.3,
+    "RMSE": 157.32,
+    "R2": 0.9919
+  },
+  "models": [
+    {
+      "key": "linear_regression",
+      "name": "Linear Regression (baseline)",
+      "file": "model_linear_regression.joblib",
+      "is_best": false,
+      "metrics_test": {
+        "MAE": 100.18,
+        "RMSE": 344.67,
+        "R2": 0.9676
+      },
+      "metrics_train": {
+        "MAE": 74.75,
+        "RMSE": 222.69,
+        "R2": 0.9837
+      },
+      "train_time_s": 0.67,
+      "predict_time_ms_per_row": 0.0028,
+      "model_size_MB": 0.03
+    },
+    {
+      "key": "decision_tree",
+      "name": "Decision Tree",
+      "file": "model_decision_tree.joblib",
+      "is_best": false,
+      "metrics_test": {
+        "MAE": 217.15,
+        "RMSE": 611.64,
+        "R2": 0.898
+      },
+      "metrics_train": {
+        "MAE": 202.26,
+        "RMSE": 572.68,
+        "R2": 0.8921
+      },
+      "train_time_s": 0.16,
+      "predict_time_ms_per_row": 0.0025,
+      "model_size_MB": 0.04
+    },
+    {
+      "key": "random_forest",
+      "name": "Random Forest",
+      "file": "model_random_forest.joblib",
+      "is_best": false,
+      "metrics_test": {
+        "MAE": 136.12,
+        "RMSE": 457.53,
+        "R2": 0.9429
+      },
+      "metrics_train": {
+        "MAE": 120.71,
+        "RMSE": 448.41,
+        "R2": 0.9339
+      },
+      "train_time_s": 52.95,
+      "predict_time_ms_per_row": 0.0373,
+      "model_size_MB": 26.28
+    },
+    {
+      "key": "svr",
+      "name": "SVR",
+      "file": "model_svr.joblib",
+      "is_best": true,
+      "metrics_test": {
+        "MAE": 83.3,
+        "RMSE": 289.05,
+        "R2": 0.9772
+      },
+      "metrics_train": {
+        "MAE": 55.3,
+        "RMSE": 157.32,
+        "R2": 0.9919
+      },
+      "train_time_s": 35.82,
+      "predict_time_ms_per_row": 0.2886,
+      "model_size_MB": 0.18
+    }
+  ],
+  "all_models_compared": [
+    {
+      "model": "Linear Regression (baseline)",
+      "key": "linear_regression",
+      "file": "model_linear_regression.joblib",
+      "MAE_test": 100.18,
+      "RMSE_test": 344.67,
+      "R2_test": 0.9676,
+      "MAE_train": 74.75,
+      "RMSE_train": 222.69,
+      "R2_train": 0.9837,
+      "train_time_s": 0.67,
+      "predict_time_ms_per_row": 0.0028,
+      "model_size_MB": 0.03
+    },
+    {
+      "model": "Decision Tree",
+      "key": "decision_tree",
+      "file": "model_decision_tree.joblib",
+      "MAE_test": 217.15,
+      "RMSE_test": 611.64,
+      "R2_test": 0.898,
+      "MAE_train": 202.26,
+      "RMSE_train": 572.68,
+      "R2_train": 0.8921,
+      "train_time_s": 0.16,
+      "predict_time_ms_per_row": 0.0025,
+      "model_size_MB": 0.04
+    },
+    {
+      "model": "Random Forest",
+      "key": "random_forest",
+      "file": "model_random_forest.joblib",
+      "MAE_test": 136.12,
+      "RMSE_test": 457.53,
+      "R2_test": 0.9429,
+      "MAE_train": 120.71,
+      "RMSE_train": 448.41,
+      "R2_train": 0.9339,
+      "train_time_s": 52.95,
+      "predict_time_ms_per_row": 0.0373,
+      "model_size_MB": 26.28
+    },
+    {
+      "model": "SVR",
+      "key": "svr",
+      "file": "model_svr.joblib",
+      "MAE_test": 83.3,
+      "RMSE_test": 289.05,
+      "R2_test": 0.9772,
+      "MAE_train": 55.3,
+      "RMSE_train": 157.32,
+      "R2_train": 0.9919,
+      "train_time_s": 35.82,
+      "predict_time_ms_per_row": 0.2886,
+      "model_size_MB": 0.18
+    }
+  ],
+  "target_unit": "million_vnd",
+  "n_rows_train": 19778,
+  "n_rows_test": 4945,
+  "random_state": 42,
+  "library_versions": {
+    "python": "3.12.3",
+    "scikit-learn": "1.8.0",
+    "numpy": "2.4.4",
+    "pandas": "3.0.2",
+    "joblib": "1.5.3"
+  }
+}
