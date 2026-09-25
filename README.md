@@ -1,13 +1,12 @@
-# 07_MSSV1_MSSV2_HocMayCoBan — Dự đoán giá xe ô tô cũ
-
-> ⚠️ Thay `07_MSSV1_MSSV2_HocMayCoBan` bằng đúng tên nhóm/MSSV của bạn theo quy ước lớp, và điền các mục còn để trống (thành viên, địa chỉ public, v.v.) trước khi nộp.
+# 18_10123237_10123242_HocMayCoBan — Dự đoán giá xe ô tô cũ
 
 ## 1. Thành viên
 
-| Họ tên | MSSV | Phần việc |
-|---|---|---|
-| *(điền)* | *(điền)* | 
-| *(điền)* | *(điền)* | 
+| Họ tên            | MSSV     | 
+| ----------------- | -------- | 
+| Đỗ Văn Nghĩa      | 10123237 | 
+| Nguyễn Hoàng Nhất | 10123242 | 
+
 
 ## 2. Bài toán
 
