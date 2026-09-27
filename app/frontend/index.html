@@ -1,9 +1,107 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body></body>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dự đoán giá xe ô tô cũ</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; color: #1b1f23; }
+  h1 { font-size: 1.4rem; }
+  label { display: block; margin-top: 12px; font-size: 0.9rem; color: #444; }
+  input, select { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+  button { margin-top: 20px; padding: 10px 18px; background: #2f6690; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+  button:hover { background: #3a7ca5; }
+  #result { margin-top: 20px; padding: 14px; border-radius: 8px; background: #f0f6fa; display: none; }
+  #result.error { background: #fdecea; color: #7a271a; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .model-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  @media (max-width: 480px) { .model-cards { grid-template-columns: 1fr; } }
+  .model-card { background: #fff; border: 1px solid #dbe4ea; border-radius: 8px; padding: 10px 12px; }
+  .model-card.best { border-color: #2f6690; box-shadow: 0 0 0 2px rgba(47,102,144,0.15); }
+  .model-card .name { font-weight: 600; font-size: 0.92rem; display: flex; align-items: center; gap: 6px; }
+  .model-card .badge { font-size: 0.68rem; background: #2f6690; color: #fff; padding: 1px 6px; border-radius: 10px; }
+  .model-card .price { font-size: 1.15rem; margin: 4px 0 2px; color: #1b1f23; }
+  .model-card .meta { font-size: 0.75rem; color: #667; }
+</style>
+</head>
+<body>
+  <h1>🚗 Dự đoán giá xe ô tô cũ</h1>
+  <p style="color:#666;font-size:0.9rem">Nhập thông tin xe để nhận giá dự đoán (đơn vị: triệu VNĐ).</p>
+  <form id="predict-form">
+    <div class="grid">
+      <div><label>Hãng xe (brand)<input name="brand" value="Toyota" required></label></div>
+      <div><label>Dòng xe (model)<input name="model" value="Camry 2.5Q" required></label></div>
+      <div><label>Kiểu dáng (series)<input name="series" value="Sedan" required></label></div>
+      <div><label>Năm sản xuất<input name="year" type="number" value="2018" required></label></div>
+      <div><label>Số km đã đi<input name="driven_kms" type="number" value="50000" required></label></div>
+      <div><label>Xuất xứ
+        <select name="assemble_place">
+          <option>Nhập khẩu</option><option>Lắp ráp trong nước</option>
+        </select></label></div>
+      <div><label>Nhiên liệu
+        <select name="engine_type"><option>Xăng</option><option>Dầu</option><option>Hybrid</option><option>Điện</option></select></label></div>
+      <div><label>Hộp số
+        <select name="transmission"><option>Số tự động</option><option>Số sàn</option></select></label></div>
+      <div><label>Số cửa<input name="num_of_door" type="number" value="4" required></label></div>
+      <div><label>Số chỗ<input name="num_of_seat" type="number" value="5" required></label></div>
+    </div>
+    <button type="submit">Dự đoán giá</button>
+  </form>
+  <div id="result"></div>
+
+<script>
+const form = document.getElementById('predict-form');
+const resultBox = document.getElementById('result');
+
+function uuidShort() {
+  return Math.random().toString(16).slice(2, 10);
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(form);
+  const features = Object.fromEntries(fd.entries());
+  ['year', 'driven_kms', 'num_of_door', 'num_of_seat'].forEach(k => features[k] = Number(features[k]));
+
+  resultBox.style.display = 'block';
+  resultBox.className = '';
+  resultBox.textContent = 'Đang dự đoán...';
+
+  try {
+    const resp = await fetch('/api/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Request-ID': uuidShort() },
+      body: JSON.stringify({ features }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      resultBox.className = 'error';
+      resultBox.textContent = 'Lỗi: ' + (data.detail || data.error);
+    } else {
+      resultBox.className = '';
+      const results = data.results || [];
+      const cardsHtml = results.map(m => `
+        <div class="model-card ${m.is_best ? 'best' : ''}">
+          <div class="name">${m.model_name} ${m.is_best ? '<span class="badge">Tốt nhất</span>' : ''}</div>
+          <div class="price">${m.prediction_text}</div>
+          <div class="meta">
+            ${m.metrics_test ? `R² test: ${m.metrics_test.R2} · MAE: ${m.metrics_test.MAE} triệu` : ''}
+            <br>Thời gian dự đoán: ${m.predict_time_ms} ms
+          </div>
+        </div>`).join('');
+
+      resultBox.innerHTML = `
+        <div><strong>Kết quả dự đoán từ cả 4 model:</strong></div>
+        <div class="model-cards">${cardsHtml}</div>
+        <small style="display:block;margin-top:8px;color:#667">
+          model_version: ${data.model_version} · request_id: ${data.request_id}
+        </small>`;
+    }
+  } catch (err) {
+    resultBox.className = 'error';
+    resultBox.textContent = 'Không gọi được API: ' + err;
+  }
+});
+</script>
+</body>
 </html>
